@@ -9,7 +9,7 @@ install:
     - pip install codecov
 script:
     - find ./gotorrent -name \*.py -exec pycodestyle {} +
-    - nosetests --with-coverage
+    - nosetests -v --with-coverage --cover-erase --cover-package=gotorrent
 after_success:
     - coveralls
     - codecov
