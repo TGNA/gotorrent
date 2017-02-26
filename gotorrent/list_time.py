@@ -6,7 +6,7 @@ class ListTime(object):
         self.peers = {}
         self.update(peer)
 
-    def remove_unannounced(self, diff_time = 10):
+    def remove_unannounced(self, diff_time=10):
         current = datetime.datetime.now()
         aux_dict = {}
         for peer, last_update in self.peers.items():
