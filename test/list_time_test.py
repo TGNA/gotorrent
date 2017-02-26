@@ -14,7 +14,7 @@ class ListTimeTest(unittest.TestCase):
         list = ListTime(1)
         list.update(2)
         list.update(3)
-        list.remove_unannounced(diffTime=0)
+        list.remove_unannounced(diff_time=0)
         result = list.get_peers()
         self.assertEqual([], result)
 

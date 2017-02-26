@@ -4,9 +4,11 @@ python:
 sudo: required
 install:
     - pip install -r requirements.txt
+    - pip install pycodestyle
     - pip install coveralls
     - pip install codecov
 script:
+    - find ./gotorrent -name \*.py -exec pycodestyle {} +
     - nosetests --with-coverage
 after_success:
     - coveralls
