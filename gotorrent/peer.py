@@ -8,7 +8,7 @@ class Peer(object):
 
     def init_start(self):
         self.interval = interval_host(self.host, 3, self.announce_me)
-        later(15, self.stop_interval)
+        later(5, self.stop_interval)
 
     def stop_interval(self):
         self.interval.set()

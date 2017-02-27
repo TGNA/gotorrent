@@ -1,12 +1,16 @@
 import unittest
 from gotorrent.peer import *
 from gotorrent.tracker import *
-from pyactor.context import set_context, create_host, sleep, serve_forever, shutdown
+from pyactor.context import set_context, create_host, sleep, shutdown
+
 
 class TrackerTest(unittest.TestCase):
     def setUp(self):
         unittest.TestCase.setUp(self)
-        set_context()
+        try:
+            set_context()
+        except:
+            pass
         self.host = create_host()
         # Spawn tracker and peers
         self.tracker = self.host.spawn('tracker', Tracker)
@@ -17,7 +21,6 @@ class TrackerTest(unittest.TestCase):
         self.p1.attach_tracker(self.tracker)
         self.p2.attach_tracker(self.tracker)
         self.p3.attach_tracker(self.tracker)
-        
 
     def test_tracker(self):
         # Start intervals
@@ -26,7 +29,7 @@ class TrackerTest(unittest.TestCase):
         self.p1.announce_me()
         sleep(0.5)
         self.assertEqual(['peer1'], self.tracker.get_peers("file"))
-        
+
         self.p2.announce_me()
         sleep(0.5)
         self.assertEqual(set(['peer1', 'peer2']), set(self.tracker.get_peers("file")))

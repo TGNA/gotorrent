@@ -16,7 +16,7 @@ class Tracker(object):
         self.peers = {}
 
     def init_start(self):
-        self.interval_check = interval_host(self.host, 10, self.check_peers)
+        self.interval_check = interval_host(self.host, 1, self.check_peers)
 
     def check_peers(self):
         for key, peers in self.peers.items():
