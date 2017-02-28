@@ -44,6 +44,9 @@ class TrackerTest(unittest.TestCase):
         p3.announce_me()
         sleep(0.5)
         self.assertEqual(set(['peer1', 'peer2', 'peer3']), set(tracker.get_peers("file")))
+
+        self.assertEqual([], tracker.get_peers("file1"))
+
         shutdown()
 
 
