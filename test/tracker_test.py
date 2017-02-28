@@ -13,7 +13,11 @@ class TrackerTest(unittest.TestCase):
             set_context()
         except:
             pass
-        host = create_host()
+
+        try:
+            host = create_host()
+        except:
+            pass
 
         self.assertEqual(host.__class__.__name__, 'Proxy')
         self.assertEqual(host.actor.klass.__name__, 'Host')
