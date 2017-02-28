@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 
 class ListTime(object):
@@ -7,7 +7,7 @@ class ListTime(object):
         self.update(peer)
 
     def remove_unannounced(self, diff_time=10):
-        current = datetime.datetime.now()
+        current = datetime.now()
         aux_dict = {}
         for peer, last_update in self.peers.items():
             diff = current - last_update
@@ -17,7 +17,7 @@ class ListTime(object):
         # print ', '.join(map(str, self.peers.keys()))
 
     def update(self, peer):
-        self.peers[peer] = datetime.datetime.now()
+        self.peers[peer] = datetime.now()
 
     def get_peers(self):
         return self.peers.keys()

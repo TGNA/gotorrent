@@ -19,9 +19,6 @@ class PeerTest(unittest.TestCase):
         except:
             pass
 
-        self.assertEqual(host.__class__.__name__, 'Proxy')
-        self.assertEqual(host.actor.klass.__name__, 'Host')
-
         # Spawn tracker and peers
         tracker = host.spawn('tracker', Tracker)
         p1 = host.spawn('peer1', Peer)

@@ -15,12 +15,10 @@ class TrackerTest(unittest.TestCase):
             pass
 
         try:
+
             host = create_host()
         except:
             pass
-
-        self.assertEqual(host.__class__.__name__, 'Proxy')
-        self.assertEqual(host.actor.klass.__name__, 'Host')
 
         # Spawn tracker and peers
         tracker = host.spawn('tracker', Tracker)
