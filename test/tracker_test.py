@@ -13,31 +13,35 @@ class TrackerTest(unittest.TestCase):
             set_context()
         except:
             pass
-        self.host = create_host()
+        host = create_host()
+
+        self.assertEqual(host.__class__.__name__, 'Proxy')
+        self.assertEqual(host.actor.klass.__name__, 'Host')
+
         # Spawn tracker and peers
-        self.tracker = self.host.spawn('tracker', Tracker)
-        self.p1 = self.host.spawn('peer1', Peer)
-        self.p2 = self.host.spawn('peer2', Peer)
-        self.p3 = self.host.spawn('peer3', Peer)
+        tracker = host.spawn('tracker', Tracker)
+        p1 = host.spawn('peer1', Peer)
+        p2 = host.spawn('peer2', Peer)
+        p3 = host.spawn('peer3', Peer)
         # Attach tracker to peers
-        self.p1.attach_tracker(self.tracker)
-        self.p2.attach_tracker(self.tracker)
-        self.p3.attach_tracker(self.tracker)
+        p1.attach_tracker(tracker)
+        p2.attach_tracker(tracker)
+        p3.attach_tracker(tracker)
 
         # Start intervals
-        self.tracker.init_start()
+        tracker.init_start()
 
-        self.p1.announce_me()
+        p1.announce_me()
         sleep(0.5)
-        self.assertEqual(['peer1'], self.tracker.get_peers("file"))
+        self.assertEqual(['peer1'], tracker.get_peers("file"))
 
-        self.p2.announce_me()
+        p2.announce_me()
         sleep(0.5)
-        self.assertEqual(set(['peer1', 'peer2']), set(self.tracker.get_peers("file")))
+        self.assertEqual(set(['peer1', 'peer2']), set(tracker.get_peers("file")))
 
-        self.p3.announce_me()
+        p3.announce_me()
         sleep(0.5)
-        self.assertEqual(set(['peer1', 'peer2', 'peer3']), set(self.tracker.get_peers("file")))
+        self.assertEqual(set(['peer1', 'peer2', 'peer3']), set(tracker.get_peers("file")))
         shutdown()
 
 

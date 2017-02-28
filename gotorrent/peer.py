@@ -1,14 +1,11 @@
-from pyactor.context import interval_host, later
-
-
 class Peer(object):
-    _tell = ['announce_me', 'attach_tracker', 'init_start']
+    _tell = ['announce_me', 'attach_tracker', 'init_start', 'stop_interval']
     _ask = []
     _ref = ['attach_tracker']
 
     def init_start(self):
-        self.interval = interval_host(self.host, 3, self.announce_me)
-        later(5, self.stop_interval)
+        self.interval = self.host.interval(3, self.proxy, 'announce_me')
+        self.host.later(5, self.proxy, 'stop_interval')
 
     def stop_interval(self):
         self.interval.set()

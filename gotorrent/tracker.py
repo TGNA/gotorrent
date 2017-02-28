@@ -3,12 +3,11 @@ Tracker
 Made by: Oscar Blanco and Victor Colome
 '''
 
-from pyactor.context import interval_host
 from list_time import ListTime
 
 
 class Tracker(object):
-    _tell = ['announce', 'init_start']
+    _tell = ['announce', 'init_start', 'check_peers']
     _ask = ['get_peers']
     _ref = ['announce']
 
@@ -16,7 +15,7 @@ class Tracker(object):
         self.peers = {}
 
     def init_start(self):
-        self.interval_check = interval_host(self.host, 1, self.check_peers)
+        self.interval_check = self.host.interval(1, self.proxy, 'check_peers')
 
     def check_peers(self):
         for key, peers in self.peers.items():
