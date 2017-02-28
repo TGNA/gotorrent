@@ -18,7 +18,7 @@ class Tracker(object):
         self.interval_check = self.host.interval(1, self.proxy, 'check_peers')
 
     def check_peers(self):
-        for key, peers in self.peers.items():
+        for peers in self.peers.values():
             peers.remove_unannounced()
 
     def announce(self, torrent_hash, peer_ref):
