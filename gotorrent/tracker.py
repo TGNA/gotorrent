@@ -3,7 +3,7 @@ Tracker
 Made by: Oscar Blanco and Victor Colome
 '''
 
-from list_time import ListTime
+from swarm import Swarm
 
 
 class Tracker(object):
@@ -25,7 +25,7 @@ class Tracker(object):
         try:
             self.peers[torrent_hash].update(peer_ref)
         except KeyError:
-            self.peers[torrent_hash] = ListTime(peer_ref)
+            self.peers[torrent_hash] = Swarm(peer_ref)
 
     def get_peers(self, torrent_hash):
         try:

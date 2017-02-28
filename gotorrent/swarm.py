@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-class ListTime(object):
+class Swarm(object):
     def __init__(self, peer):
         self.peers = {}
         self.update(peer)
