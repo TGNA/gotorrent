@@ -7,6 +7,8 @@ from pyactor.context import set_context, create_host, sleep, shutdown
 class TrackerTest(unittest.TestCase):
     def setUp(self):
         unittest.TestCase.setUp(self)
+
+    def test_tracker(self):
         try:
             set_context()
         except:
@@ -22,7 +24,6 @@ class TrackerTest(unittest.TestCase):
         self.p2.attach_tracker(self.tracker)
         self.p3.attach_tracker(self.tracker)
 
-    def test_tracker(self):
         # Start intervals
         self.tracker.init_start()
 
