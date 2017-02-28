@@ -2,7 +2,7 @@ import unittest
 from gotorrent.swarm import Swarm
 
 
-class ListTimeTest(unittest.TestCase):
+class SwarmTest(unittest.TestCase):
     def test_get_peers(self):
         list = Swarm(1)
         list.update(2)
