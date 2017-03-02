@@ -7,8 +7,8 @@ class SwarmTest(unittest.TestCase):
         list = Swarm(1)
         list.update(2)
         list.update(3)
-        result = list.get_peers()
-        self.assertEqual([1, 2, 3], result)
+        result = set(list.get_peers())
+        self.assertEqual(set([1, 2, 3]), result)
 
     def test_remove_unannounced(self):
         list = Swarm(1)
