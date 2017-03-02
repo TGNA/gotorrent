@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from random import sample
 
 class Swarm(object):
     def __init__(self, peer):
@@ -20,4 +20,4 @@ class Swarm(object):
         self.peers[peer] = datetime.now()
 
     def get_peers(self):
-        return self.peers.keys()
+        return sample(self.peers.keys(), min(3, len(self.peers)))
