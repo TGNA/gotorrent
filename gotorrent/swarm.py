@@ -1,6 +1,7 @@
 from datetime import datetime
 from random import sample
 
+
 class Swarm(object):
     def __init__(self, peer):
         self.peers = {}
