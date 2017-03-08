@@ -1,8 +1,8 @@
 from random import choice
 
 class Peer(object):
-    _tell = ['announce_me', 'attach_tracker', 'init_start', 'set_seed', 'push', 'make_push', 'attach_printer']
-    _ask = ['get_id']
+    _tell = ['announce_me', 'attach_tracker', 'init_start', 'init_push', 'init_pull', 'set_seed', 'push', 'make_push', 'make_pull', 'attach_printer']
+    _ask = ['get_id', 'pull']
     _ref = ['attach_tracker', 'set_seed', 'attach_printer']
 
     def __init__(self):
@@ -14,7 +14,14 @@ class Peer(object):
 
     def init_start(self):
         self.interval = self.host.interval(3, self.proxy, 'announce_me')
+
+    def init_push(self):
+        self.init_start()
         self.interval_push = self.host.interval(1, self.proxy, 'make_push')
+
+    def init_pull(self):
+        self.init_start()
+        self.interval_pull = self.host.interval(1, self.proxy, 'make_pull')
 
     def get_id(self):
         return self.id
@@ -34,9 +41,28 @@ class Peer(object):
 
     def make_push(self):
         try:
-            peer = choice(self.tracker.get_peers("file"))
-            data = choice(self.data.items())
+            for peer in self.tracker.get_peers("file"):
+                data = choice(self.data.items())
+                peer.push(data[0], data[1])
+        except:
+            pass
 
-            peer.push(data[0], data[1])
+    def pull(self, chunk_id):
+        return self.data[chunk_id]
+
+    def make_pull(self):
+        try:
+            all = set(range(6))
+            for peer in self.tracker.get_peers("file"):
+                try:
+                    used = set(self.data.keys())
+                    diff = list(all - used)
+                    pos = choice(diff)
+                    self.data[pos] = peer.pull(pos)
+                    self.printer.to_print(str(self.id) + str(self.data.items()))
+                    # self.printer.to_print(str(self.id) + str(all) + str(used) + str(diff) + str(pos))
+                except:
+                    pass
+
         except:
             pass

@@ -27,8 +27,8 @@ p3.attach_tracker(tracker)
 # Start intervals
 tracker.init_start()
 
-p1.init_push()
-p2.init_push()
-p3.init_push()
+p1.init_pull()
+p2.init_pull()
+p3.init_pull()
 
 serve_forever()
