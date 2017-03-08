@@ -3,7 +3,7 @@ from random import choice
 class Peer(object):
     _tell = ['announce_me', 'attach_tracker', 'init_start', 'stop_interval', 'set_seed', 'push']
     _ask = ['get_id']
-    _ref = ['attach_tracker']
+    _ref = ['attach_tracker', 'set_seed']
 
     def __init__(self):
         self.data = {}
