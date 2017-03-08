@@ -1,9 +1,9 @@
 from random import choice
 
 class Peer(object):
-    _tell = ['announce_me', 'attach_tracker', 'init_start', 'stop_interval', 'set_seed', 'push']
+    _tell = ['announce_me', 'attach_tracker', 'init_start', 'set_seed', 'push', 'make_push', 'attach_printer']
     _ask = ['get_id']
-    _ref = ['attach_tracker', 'set_seed']
+    _ref = ['attach_tracker', 'set_seed', 'attach_printer']
 
     def __init__(self):
         self.data = {}
@@ -15,13 +15,9 @@ class Peer(object):
     def init_start(self):
         self.interval = self.host.interval(3, self.proxy, 'announce_me')
         self.interval_push = self.host.interval(1, self.proxy, 'make_push')
-        self.host.later(5, self.proxy, 'stop_interval')
 
     def get_id(self):
         return self.id
-
-    def stop_interval(self):
-        self.interval.set()
 
     def announce_me(self):
         self.tracker.announce("file", self)
@@ -29,13 +25,18 @@ class Peer(object):
     def attach_tracker(self, tracker):
         self.tracker = tracker
 
+    def attach_printer(self, printer):
+        self.printer = printer
+
     def push(self, chunk_id, chunk_data):
         self.data[chunk_id] = chunk_data
-        print self.id, self.data.items()
+        self.printer.to_print(str(self.id) + str(self.data.items()))
 
     def make_push(self):
-        peer = choice(self.tracker.get_peers())
-        data = choice(self.data.items())
+        try:
+            peer = choice(self.tracker.get_peers("file"))
+            data = choice(self.data.items())
 
-        peer.push(data[0], data[1])
-
+            peer.push(data[0], data[1])
+        except:
+            pass
