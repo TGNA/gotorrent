@@ -40,29 +40,25 @@ class Peer(object):
         self.printer.to_print(str(self.id) + str(self.data.items()))
 
     def make_push(self):
-        try:
-            for peer in self.tracker.get_peers("file"):
+        for peer in self.tracker.get_peers("file"):
+            try:
                 data = choice(self.data.items())
                 peer.push(data[0], data[1])
-        except:
-            pass
+            except:
+                pass
 
     def pull(self, chunk_id):
         return self.data[chunk_id]
 
     def make_pull(self):
-        try:
-            all = set(range(6))
-            for peer in self.tracker.get_peers("file"):
-                try:
-                    used = set(self.data.keys())
-                    diff = list(all - used)
-                    pos = choice(diff)
-                    self.data[pos] = peer.pull(pos)
-                    self.printer.to_print(str(self.id) + str(self.data.items()))
-                    # self.printer.to_print(str(self.id) + str(all) + str(used) + str(diff) + str(pos))
-                except:
-                    pass
-
-        except:
-            pass
+        all = set(range(6))
+        for peer in self.tracker.get_peers("file"):
+            try:
+                used = set(self.data.keys())
+                diff = list(all - used)
+                pos = choice(diff)
+                self.data[pos] = peer.pull(pos)
+                self.printer.to_print(str(self.id) + str(self.data.items()))
+                # self.printer.to_print(str(self.id) + str(all) + str(used) + str(diff) + str(pos))
+            except:
+                pass
