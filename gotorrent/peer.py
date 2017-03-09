@@ -1,7 +1,7 @@
 from random import choice
 
 class Peer(object):
-    _tell = ['announce_me', 'attach_tracker', 'init_start', 'init_push', 'init_pull', 'set_seed', 'push', 'make_push', 'make_pull', 'attach_printer']
+    _tell = ['announce_me', 'attach_tracker', 'init_start', 'init_push', 'init_pull', 'init_hybrid', 'set_seed', 'push', 'make_push', 'make_pull', 'make_hybrid', 'attach_printer']
     _ask = ['get_id', 'pull']
     _ref = ['attach_tracker', 'set_seed', 'attach_printer']
 
@@ -22,6 +22,10 @@ class Peer(object):
     def init_pull(self):
         self.init_start()
         self.interval_pull = self.host.interval(1, self.proxy, 'make_pull')
+
+    def init_hybrid(self):
+        self.init_start()
+        self.interval_hybrid = self.host.interval(1, self.proxy, 'make_hybrid')
 
     def get_id(self):
         return self.id
@@ -62,3 +66,23 @@ class Peer(object):
                 # self.printer.to_print(str(self.id) + str(all) + str(used) + str(diff) + str(pos))
             except:
                 pass
+
+    def make_hybrid(self):
+        all = set(range(6))
+        for peer in self.tracker.get_peers("file"):
+            try:
+                #push
+                data = choice(self.data.items())
+                peer.push(data[0],data[1])
+            except:
+                pass
+            try:
+                #pulls
+                used = set(self.data.keys())
+                diff = list(all - used)
+                pos = choice(diff)
+                self.data[pos] = peer.pull(pos)
+            except:
+                pass
+
+
