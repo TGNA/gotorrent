@@ -27,8 +27,11 @@ class Tracker(object):
         except KeyError:
             self.peers[torrent_hash] = Swarm(peer_ref)
 
-    def get_peers(self, torrent_hash):
+    def get_peers(self, torrent_hash, id=False):
         try:
-            return self.peers[torrent_hash].get_peers()
+            if id:
+                return self.peers[torrent_hash].get_peers_id()
+            else:
+                return self.peers[torrent_hash].get_peers()
         except KeyError:
             return []

@@ -15,7 +15,6 @@ class TrackerTest(unittest.TestCase):
             pass
 
         try:
-
             host = create_host()
         except:
             pass
@@ -35,15 +34,15 @@ class TrackerTest(unittest.TestCase):
 
         p1.announce_me()
         sleep(0.5)
-        self.assertEqual(['peer1'], tracker.get_peers("file"))
+        self.assertEqual(['peer1'], tracker.get_peers("file", True))
 
         p2.announce_me()
         sleep(0.5)
-        self.assertEqual(set(['peer1', 'peer2']), set(tracker.get_peers("file")))
+        self.assertEqual(set(['peer1', 'peer2']), set(tracker.get_peers("file", True)))
 
         p3.announce_me()
         sleep(0.5)
-        self.assertEqual(set(['peer1', 'peer2', 'peer3']), set(tracker.get_peers("file")))
+        self.assertEqual(set(['peer1', 'peer2', 'peer3']), set(tracker.get_peers("file", True)))
 
         self.assertEqual([], tracker.get_peers("file1"))
 

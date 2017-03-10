@@ -20,5 +20,8 @@ class Swarm(object):
     def update(self, peer):
         self.peers[peer] = datetime.now()
 
+    def get_peers_id(self):
+        return sample(map((lambda x: x.get_id()), self.peers.keys()), min(3, len(self.peers)))
+
     def get_peers(self):
         return sample(self.peers.keys(), min(3, len(self.peers)))
