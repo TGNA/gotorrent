@@ -1,4 +1,5 @@
 from random import choice
+from pyactor.context import interval, later
 
 
 class Peer(object):
@@ -16,23 +17,24 @@ class Peer(object):
             self.data[idx] = char
 
     def init_start(self):
-        self.interval = self.host.interval(3, self.proxy, 'announce_me')
-        self.host.later(5, self.proxy, 'stop_interval')
+        self.interval = interval(self.host, 3, self.proxy, 'announce_me')
+        later(5, self.proxy, 'stop_interval')
 
     def stop_interval(self):
         self.interval.set()
 
     def init_push(self):
-        self.init_start()
-        self.interval_push = self.host.interval(1, self.proxy, 'make_push')
+        self.interval = interval(self.host, 3, self.proxy, 'announce_me')
+        self.interval_push = interval(self.host, 1, self.proxy, 'make_push')
 
     def init_pull(self):
-        self.init_start()
-        self.interval_pull = self.host.interval(1, self.proxy, 'make_pull')
+        self.interval = interval(self.host, 3, self.proxy, 'announce_me')
+        self.interval_pull = interval(self.host, 1, self.proxy, 'make_pull')
 
     def init_hybrid(self):
-        self.init_start()
-        self.interval_hybrid = self.host.interval(1, self.proxy, 'make_hybrid')
+        self.interval = interval(self.host, 3, self.proxy, 'announce_me')
+        self.interval_hybrid = interval(self.host, 1, self.proxy,
+                                        'make_hybrid')
 
     def get_id(self):
         return self.id

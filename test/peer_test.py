@@ -74,7 +74,7 @@ class PeerTest(unittest.TestCase):
         p2.init_pull()
         p3.init_pull()
 
-        sleep(20)
+        sleep(30)
 
         self.assertEqual(p1.get_data(), 'qwerty')
         self.assertEqual(p2.get_data(), 'qwerty')
@@ -98,7 +98,7 @@ class PeerTest(unittest.TestCase):
         p2.init_push()
         p3.init_push()
 
-        sleep(20)
+        sleep(30)
 
         self.assertEqual(p1.get_data(), 'qwerty')
         self.assertEqual(p2.get_data(), 'qwerty')

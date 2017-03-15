@@ -4,6 +4,7 @@ Made by: Oscar Blanco and Victor Colome
 '''
 
 from swarm import Swarm
+from pyactor.context import interval
 
 
 class Tracker(object):
@@ -15,7 +16,7 @@ class Tracker(object):
         self.peers = {}
 
     def init_start(self):
-        self.interval_check = self.host.interval(1, self.proxy, 'check_peers')
+        self.interval_check = interval(self.host, 1, self.proxy, 'check_peers')
 
     def check_peers(self):
         for peers in self.peers.values():
