@@ -43,7 +43,7 @@ class Peer(object):
         return ''.join(self.data.values())
 
     def announce_me(self):
-        self.tracker.announce("file", self)
+        self.tracker.announce("file", self.proxy)
 
     def attach_tracker(self, tracker):
         self.tracker = tracker
