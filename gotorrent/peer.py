@@ -53,7 +53,7 @@ class Peer(object):
 
     def push(self, chunk_id, chunk_data):
         self.data[chunk_id] = chunk_data
-        # self.printer.to_print(str(self.id) + str(self.data.items()))
+        self.printer.to_print(str(self.id) + str(self.data.items()))
 
     def make_push(self):
         for peer in self.tracker.get_peers("file"):
@@ -74,7 +74,7 @@ class Peer(object):
                 diff = list(all - used)
                 pos = choice(diff)
                 self.data[pos] = peer.pull(pos)
-                # self.printer.to_print(str(self.id) + str(self.data.items()))
+                self.printer.to_print(str(self.id) + str(self.data.items()))
             except IndexError:
                 pass
 
