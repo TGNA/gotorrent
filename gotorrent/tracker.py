@@ -10,7 +10,7 @@ from pyactor.context import interval
 class Tracker(object):
     _tell = ['announce', 'init_start', 'check_peers']
     _ask = ['get_peers']
-    _ref = ['announce','get_peers']
+    _ref = ['announce', 'get_peers']
 
     def __init__(self):
         self.peers = {}
