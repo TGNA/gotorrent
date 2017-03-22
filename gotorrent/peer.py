@@ -93,15 +93,15 @@ class Peer(object):
                 peer.push(data[0], data[1])
             except IndexError:
                 pass
+            # pulls
+            if self.id == peer.actor.id:
+                continue
+            used = set(self.data.keys())
+            diff = list(all - used)
+            if not diff:
+                continue
+            pos = choice(diff)
             try:
-                # pulls
-                if self.id == peer.actor.id:
-                    continue
-                used = set(self.data.keys())
-                diff = list(all - used)
-                if not diff:
-                    continue
-                pos = choice(diff)
                 self.data[pos] = peer.pull(pos)
-            except IndexError:
+            except (TimeoutError, KeyError):
                 pass
