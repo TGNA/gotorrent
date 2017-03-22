@@ -1,5 +1,6 @@
 from random import choice
 from pyactor.context import interval, later
+from pyactor.exceptions import TimeoutError
 
 
 class Peer(object):
@@ -7,7 +8,7 @@ class Peer(object):
              'init_pull', 'init_hybrid', 'set_seed', 'push', 'make_push',
              'make_pull', 'make_hybrid', 'attach_printer', 'stop_interval']
     _ask = ['get_id', 'pull', 'get_data']
-    _ref = ['attach_tracker', 'set_seed', 'attach_printer']
+    _ref = ['attach_tracker', 'attach_printer']
 
     def __init__(self):
         self.data = {}
@@ -69,14 +70,19 @@ class Peer(object):
     def make_pull(self):
         all = set(range(6))
         for peer in self.tracker.get_peers("file"):
+            # print self.id + "=" + peer.actor.id
+            if self.id == peer.actor.id:
+                continue
+            used = set(self.data.keys())
+            diff = list(all - used)
+            if not diff:
+                continue
+            pos = choice(diff)
             try:
-                used = set(self.data.keys())
-                diff = list(all - used)
-                pos = choice(diff)
                 self.data[pos] = peer.pull(pos)
-                self.printer.to_print(str(self.id) + str(self.data.items()))
-            except IndexError:
+            except (TimeoutError, KeyError):
                 pass
+            self.printer.to_print(str(self.id) + str(self.data.items()))
 
     def make_hybrid(self):
         all = set(range(6))
@@ -89,8 +95,12 @@ class Peer(object):
                 pass
             try:
                 # pulls
+                if self.id == peer.actor.id:
+                    continue
                 used = set(self.data.keys())
                 diff = list(all - used)
+                if not diff:
+                    continue
                 pos = choice(diff)
                 self.data[pos] = peer.pull(pos)
             except IndexError:
