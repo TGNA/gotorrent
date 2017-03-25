@@ -27,8 +27,19 @@ class Printer(object):
             title=title,
             width=1000,
             height=640,
-            xaxis=dict(title='gossip cycle'),
-            yaxis=dict(title='string size'),
+            xaxis=dict(
+                title='gossip cycle',
+                autotick=False,
+                tick0=0,
+                dtick=1
+            )
+            ,
+            yaxis=dict(
+                title='string size',
+                autotick=False,
+                tick0=0,
+                dtick=1
+            )
         )
 
         fig = go.Figure(data=self.data.values(), layout=layout)

@@ -37,7 +37,7 @@ class Peer(object):
         self.cycle = 0
         self.interval = interval(self.host, 3, self.proxy, 'announce_me')
         self.interval_push = interval(self.host, 1, self.proxy, 'make_push')
-        later(20, self.proxy, 'make_graph', 'Push', 'push')
+        later(22, self.proxy, 'make_graph', 'Push', 'push')
 
     def init_pull(self):
         self.cycle = 0
