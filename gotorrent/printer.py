@@ -33,4 +33,4 @@ class Printer(object):
 
         fig = go.Figure(data=self.data.values(), layout=layout)
         py.image.save_as(fig, filename=filename + '.png')
-        print "generated graphic " + filename + '.png'
+        self.to_print("generated graphic " + filename + '.png')
