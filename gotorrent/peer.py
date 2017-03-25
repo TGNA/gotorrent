@@ -1,7 +1,6 @@
 from random import choice
 from pyactor.context import interval, later
 from pyactor.exceptions import TimeoutError
-import os
 
 
 string_length = 0
@@ -19,6 +18,7 @@ class Peer(object):
         self.data = {}
 
     def set_seed(self):
+        idx = 0
         f = open("source.txt", "r")
         for idx, char in enumerate(f.read()):
             self.data[idx] = char
@@ -91,14 +91,14 @@ class Peer(object):
         return self.data[chunk_id]
 
     def make_pull(self):
-        all = set(range(string_length))
+        complete_list = set(range(string_length))
         self.cycle = self.cycle + 1
 
         for peer in self.tracker.get_peers("file"):
             if self.id == peer.actor.id:
                 continue
             used = set(self.data.keys())
-            diff = list(all - used)
+            diff = list(complete_list - used)
             if not diff:
                 continue
             pos = choice(diff)
@@ -112,7 +112,7 @@ class Peer(object):
                                            len(self.data.keys()))
 
     def make_hybrid(self):
-        all = set(range(string_length))
+        complete_list = set(range(string_length))
         self.cycle = self.cycle + 1
 
         for peer in self.tracker.get_peers("file"):
@@ -126,7 +126,7 @@ class Peer(object):
             if self.id == peer.actor.id:
                 continue
             used = set(self.data.keys())
-            diff = list(all - used)
+            diff = list(complete_list - used)
             if not diff:
                 continue
             pos = choice(diff)
