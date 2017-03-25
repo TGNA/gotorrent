@@ -15,7 +15,6 @@ class Swarm(object):
             if diff.total_seconds() <= diff_time:
                 aux_dict[peer] = last_update
         self.peers = aux_dict
-        # print ', '.join(map(str, self.peers.keys()))
 
     def update(self, peer):
         self.peers[peer] = datetime.now()

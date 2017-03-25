@@ -46,7 +46,7 @@ class PeerTest(unittest.TestCase):
 
     def test_pull(self):
         p1 = self.host.spawn('peer1', Peer)
-        p1.set_seed("qwerty")
+        p1.set_seed()
 
         self.assertEqual(p1.pull(0), 'q')
 
@@ -58,13 +58,13 @@ class PeerTest(unittest.TestCase):
 
     def test_get_data_set_seed(self):
         p1 = self.host.spawn('peer1', Peer)
-        p1.set_seed("qwerty")
+        p1.set_seed()
         self.assertEqual(p1.get_data(), 'qwerty')
 
     def test_make_pull(self):
         tracker = self.host.spawn('tracker', Tracker)
         p1 = self.host.spawn('peer1', Peer)
-        p1.set_seed("qwerty")
+        p1.set_seed()
         p2 = self.host.spawn('peer2', Peer)
         p3 = self.host.spawn('peer3', Peer)
 
@@ -94,7 +94,7 @@ class PeerTest(unittest.TestCase):
     def test_make_push(self):
         tracker = self.host.spawn('tracker', Tracker)
         p1 = self.host.spawn('peer1', Peer)
-        p1.set_seed("qwerty")
+        p1.set_seed()
         p2 = self.host.spawn('peer2', Peer)
         p3 = self.host.spawn('peer3', Peer)
 
@@ -124,7 +124,7 @@ class PeerTest(unittest.TestCase):
     def test_make_hybrid(self):
         tracker = self.host.spawn('tracker', Tracker)
         p1 = self.host.spawn('peer1', Peer)
-        p1.set_seed("qwerty")
+        p1.set_seed()
         p2 = self.host.spawn('peer2', Peer)
         p3 = self.host.spawn('peer3', Peer)
 
