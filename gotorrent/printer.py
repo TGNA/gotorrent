@@ -32,8 +32,7 @@ class Printer(object):
                 autotick=False,
                 tick0=0,
                 dtick=1
-            )
-            ,
+            ),
             yaxis=dict(
                 title='string size',
                 autotick=False,
